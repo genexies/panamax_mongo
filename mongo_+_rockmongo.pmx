@@ -1,0 +1,35 @@
+---
+name: mongo + rockmongo
+description: mongoDB + rockmongo admin UI
+keywords: mongo,mongodb,rockmongo,admin,ui
+type: Default
+documentation: |
+  docker-mongorocker fork
+  =======================
+
+  Just the original mongo + mongorocker docker's with some features for customization.
+
+  Instructions:
+   - access rockmongo in port 8080
+images:
+- name: mongo_latest
+  source: mongo:latest
+  category: database
+  type: Default
+  expose:
+  - '28017'
+  ports:
+  - host_port: '55517'
+    container_port: '27017'
+    proto: TCP
+- name: javierjeronimo_rockmongo
+  source: javierjeronimo/rockmongo:latest
+  category: webserver
+  type: Default
+  ports:
+  - host_port: '8080'
+    container_port: '80'
+    proto: TCP
+  links:
+  - service: mongo_latest
+    alias: mongo
